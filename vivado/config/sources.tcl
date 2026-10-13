@@ -14,7 +14,7 @@ set rtl_groups [dict create \
     dma             {rtl/dma/*.v} \
     memory          {rtl/memory/*.v} \
     sd_card         {rtl/sd_card_interface/*.v} \
-    seven_segment   {rtl/sevel_segment/*.v} \
+    seven_segment   {rtl/seven_segment/*.v} \
 ]
 
 # Globs to drop from the groups above.

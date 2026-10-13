@@ -1,0 +1,11 @@
+===================================
+Configuration Memory information
+===================================
+File Format        BIN
+Interface          SPIX1
+Size               16M
+Start Address      0x00000000
+End Address        0x00FFFFFF
+
+Addr1         Addr2         Date                    File(s)
+0x00000000    0x00001037    Oct  4 21:10:16 2026    /home/brooklyn/xilinxWork/Caravel_FPGA_2026/hex_file/our_userspace.bin
