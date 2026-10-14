@@ -13,7 +13,7 @@ set cfg_dir    [file join $script_dir config]
 set proj_name  caravel_kria
 set proj_dir   [file join $script_dir project]
 
-set target_name nexys_a7
+set target_name kria_kr26
 if {$argc > 0} { set target_name [lindex $argv 0] }
 set target_file [file join $cfg_dir targets $target_name.tcl]
 if {![file exists $target_file]} {
