@@ -10,8 +10,7 @@
 set script_dir [file dirname [file normalize [info script]]]
 set repo_root  [file dirname $script_dir]
 set cfg_dir    [file join $script_dir config]
-set proj_name  caravel_kria
-set proj_dir   [file join $script_dir project]
+
 
 set target_name kria_kr26
 if {$argc > 0} { set target_name [lindex $argv 0] }
@@ -22,6 +21,14 @@ if {![file exists $target_file]} {
 array set target {}
 source $target_file
 source [file join $cfg_dir sources.tcl]
+
+# One project per target: vivado/project/<proj_name>/<proj_name>.xpr
+if {[info exists target(proj_name)]} {
+    set proj_name $target(proj_name)
+} else {
+    set proj_name caravel_$target_name
+}
+set proj_dir [file join $script_dir project $proj_name]
 
 # Expand globs (relative to $root), minus anything matching an exclude glob.
 proc glob_files {root patterns {excludes {}}} {
@@ -41,14 +48,31 @@ proc glob_files {root patterns {excludes {}}} {
     return [lsort -unique $out]
 }
 
+# Exact board_part if installed, else the newest installed version of the same board.
+proc resolve_board_part {spec} {
+    if {[llength [get_board_parts -quiet $spec]]} { return $spec }
+    set base [join [lrange [split $spec :] 0 2] :]
+    set names {}
+    foreach b [get_board_parts -quiet "${base}:*"] { lappend names [get_property NAME $b] }
+    if {[llength $names]} {
+        set best [lindex [lsort -dictionary $names] end]
+        puts "NOTE: $spec not installed; using $best"
+        return $best
+    }
+    return ""
+}
+
 # --- project ---------------------------------------------------------------
 create_project -force $proj_name $proj_dir -part $target(part)
-if {[llength [get_board_parts -quiet $target(board_part)]]} {
-    set_property board_part $target(board_part) [current_project]
+set bp [resolve_board_part $target(board_part)]
+if {$bp ne ""} {
+    set_property board_part $bp [current_project]
+    if {[info exists target(board_connections)]} {
+        set_property board_connections $target(board_connections) [current_project]
+    }
 } else {
-    puts "WARNING: board part $target(board_part) not installed; using part only"
+    puts "WARNING: no installed board part matching $target(board_part); using part only"
 }
-set_property target_language Verilog [current_project]
 
 # --- design sources --------------------------------------------------------
 set rtl_files {}
