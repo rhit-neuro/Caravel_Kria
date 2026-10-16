@@ -75,15 +75,9 @@ module caravel (
     // quad SPI mode status to make use of the top two mprj_io
     // pins for io2 and io3.
     output flash_csb,
-    output flash_clk,
+    output flash_clk, //configued by STARTUPE2 instead of direct connection (digilent requirement)
     inout  flash_io0,
     inout  flash_io1,
-    output ser_rx_out,
-    output ser_tx_out,
-    output sdo_out,
-    output sdi_out,
-    output csb_out,
-    output sck_out,
     
     //NON CARAVEL PINS FOR 7 SEG DISPLAY
     output [7:0] Display,
@@ -95,8 +89,8 @@ module caravel (
     wire clock;
     clk_fix clk_fix(.clk_in1(clock100), .clk_out1(clock));
     
-    STARTUPE2 STARTUPE2
-     (.CLK(1'b0),
+    STARTUPE2 STARTUPE2(
+      .CLK(1'b0),
       .GSR(1'b0),
       .GTS(1'b0),
       .KEYCLEARB(1'b1),
@@ -232,23 +226,6 @@ module caravel (
   // ser_rx	= mprj_io[5]		(input)
   // ser_tx	= mprj_io[6]		(output)
   // irq		= mprj_io[7]		(input)
-
-  wire ser_rx_out;
-  wire ser_tx_out;
-
-  wire sdo_out;
-  wire sdi_out;
-  wire csb_out;
-  wire sck_out;
-
-  assign ser_rx_out =  mprj_io[5];
-  assign ser_tx_out =  mprj_io[6];
-
-  assign sdo_out = flash_io0;
-  assign sdi_out = flash_io1;
-  assign csb_out = flash_csb;
-  assign sck_out = flash_clk;
-
 
   wire clock_core;
 

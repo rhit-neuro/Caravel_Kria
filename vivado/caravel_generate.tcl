@@ -12,7 +12,7 @@ set repo_root  [file dirname $script_dir]
 set cfg_dir    [file join $script_dir config]
 
 
-set target_name kria_kr26
+set target_name nexys_a7
 if {$argc > 0} { set target_name [lindex $argv 0] }
 set target_file [file join $cfg_dir targets $target_name.tcl]
 if {![file exists $target_file]} {

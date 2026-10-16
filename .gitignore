@@ -1,1 +1,4 @@
 vivado/project/
+*vivado*.jou
+*vivado*.log
+*vivado*.str

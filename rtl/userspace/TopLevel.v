@@ -308,13 +308,13 @@ sdspi SD(
    .o_wb_data(sd_dat_4),
    
 //SD etc
-    .o_cs_n(io_out[0]), //padframe output
-    .o_sck(io_out[1]), //padframe output
-    .o_mosi(io_out[2]), //padframe output
-    .i_miso(io_in[3]), //padframe input
-    .i_card_detect(io_in[4]), //padframe input
+    .o_cs_n(io_out[25]), //padframe output
+    .o_sck(io_out[26]), //padframe output
+    .o_mosi(io_out[27]), //padframe output
+    .i_miso(io_in[28]), //padframe input
+    .i_card_detect(io_in[29]), //padframe input
     .o_int(sd_int_o),
-	.i_bus_grant(io_in[5]), //padframe input
+	.i_bus_grant(1'b1), //set high because spi bus isn't shared
 	.o_debug(sd_debug_o)
 );
 
