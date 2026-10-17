@@ -97,7 +97,8 @@ assign usr_wb_adr[1:0] = 2'b00;
 assign la_data_out[127:4] = 0;
 assign io_oeb = 0;
 assign analog_io = 0;
-assign io_out[`MPRJ_IO_PADS-1:3] = 0;
+assign io_out[24:3] = 0; // gap for the SD controller
+assign io_out[`MPRJ_IO_PADS-1:28] = 0;
 assign user_irq[2:1] = 0;
 
 //SD wires

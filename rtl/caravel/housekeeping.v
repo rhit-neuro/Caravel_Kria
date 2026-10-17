@@ -767,7 +767,7 @@ assign pad_flash_clk = pad_flash_clk_prebuff;
 
     housekeeping_spi hkspi (
 	.reset(~porb),
-    	.SCK(mgmt_gpio_in[4]),
+    	.SCK(csclk),
     	.SDI(mgmt_gpio_in[2]),
     	.CSB((spi_is_enabled) ? mgmt_gpio_in[3] : 1'b1),
     	.SDO(sdo),
